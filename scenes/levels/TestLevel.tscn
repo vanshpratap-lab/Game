@@ -1,6 +1,7 @@
 [gd_scene format=3]
 
 [ext_resource type="PackedScene" path="res://scenes/player/Player.tscn" id="1_w20ko"]
+[ext_resource type="PackedScene" path="res://scenes/props/PhysicsProp.tscn" id="3_abc12"]
 [ext_resource type="Script" path="res://scripts/player/player.gd" id="2_3wv3p"]
 
 [sub_resource type="Environment" id="Environment_timdk"]
@@ -21,49 +22,27 @@ roughness = 0.8
 material = SubResource("StandardMaterial3D_buy1m")
 size = Vector3(20, 1, 20)
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_yynx6"]
-size = Vector3(1, 5, 20)
+[sub_resource type="BoxShape3D" id="BoxShape3D_box1"]
+size = Vector3(1, 1, 1)
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ktef7"]
-albedo_color = Color(0.38, 0.4, 0.46, 1)
+[sub_resource type="StandardMaterial3D" id="BoxMaterial_box1"]
+albedo_color = Color(0.8, 0.4, 0.4, 1)
 roughness = 0.8
 
-[sub_resource type="BoxMesh" id="BoxMesh_l1je0"]
-material = SubResource("StandardMaterial3D_ktef7")
-size = Vector3(1, 5, 20)
+[sub_resource type="BoxMesh" id="BoxMesh_box1"]
+material = SubResource("BoxMaterial_box1")
+size = Vector3(1, 1, 1)
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_ae2j3"]
-size = Vector3(1, 5, 20)
+[sub_resource type="BoxShape3D" id="BoxShape3D_box2"]
+size = Vector3(1, 1, 1)
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mg55r"]
-albedo_color = Color(0.38, 0.4, 0.46, 1)
+[sub_resource type="StandardMaterial3D" id="BoxMaterial_box2"]
+albedo_color = Color(0.4, 0.4, 0.8, 1)
 roughness = 0.8
 
-[sub_resource type="BoxMesh" id="BoxMesh_21oen"]
-material = SubResource("StandardMaterial3D_mg55r")
-size = Vector3(1, 5, 20)
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_o0skh"]
-size = Vector3(20, 5, 1)
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_e5e55"]
-albedo_color = Color(0.38, 0.4, 0.46, 1)
-roughness = 0.8
-
-[sub_resource type="BoxMesh" id="BoxMesh_seeu7"]
-material = SubResource("StandardMaterial3D_e5e55")
-size = Vector3(20, 5, 1)
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_hlooo"]
-size = Vector3(20, 5, 1)
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_iatew"]
-albedo_color = Color(0.38, 0.4, 0.46, 1)
-roughness = 0.8
-
-[sub_resource type="BoxMesh" id="BoxMesh_mdsxa"]
-material = SubResource("StandardMaterial3D_iatew")
-size = Vector3(20, 5, 1)
+[sub_resource type="BoxMesh" id="BoxMesh_box2"]
+material = SubResource("BoxMaterial_box2")
+size = Vector3(1, 1, 1)
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_gfjak"]
 radius = 0.45
@@ -138,16 +117,10 @@ mesh = SubResource("BoxMesh_mdsxa")
 
 [node name="Player" type="CharacterBody3D" parent="." unique_id=963018200 node_paths=PackedStringArray("camera_rig", "camera") instance=ExtResource("1_w20ko")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1, 4)
-collision_mask = 2
+collision_mask = 2 | 4
 script = ExtResource("2_3wv3p")
 camera_rig = NodePath("CameraRig")
 camera = NodePath("CameraRig/Camera3D")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Player" unique_id=1708906229]
-shape = SubResource("CapsuleShape3D_gfjak")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Player" unique_id=1949177123]
-mesh = SubResource("CapsuleMesh_524rm")
 
 [node name="CameraRig" type="Node3D" parent="Player" unique_id=807379790]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.65, 0)
@@ -155,3 +128,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.65, 0)
 [node name="Camera3D" type="Camera3D" parent="Player/CameraRig" unique_id=1212240563]
 current = true
 far = 200.0
+
+[node name="Box1" type="RigidBody3D" parent="." unique_id=1234567890 transform=Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.0, 0) collision_layer=4 collision_mask=2]
+[node name="Box1/CollisionShape" type="CollisionShape3D" parent="Box1" unique_id=987654321]
+shape = SubResource("BoxShape3D_box1")
+
+[node name="Box1/Visuals" type="MeshInstance3D" parent="Box1" unique_id=111223344]
+mesh = SubResource("BoxMesh_box1")
+material_override = SubResource("BoxMaterial_box1")
+
+[node name="Box2" type="RigidBody3D" parent="." unique_id=1234567891 transform=Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -3.0, 0) collision_layer=4 collision_mask=2]
+[node name="Box2/CollisionShape" type="CollisionShape3D" parent="Box2" unique_id=987654322]
+shape = SubResource("BoxShape3D_box2")
+
+[node name="Box2/Visuals" type="MeshInstance3D" parent="Box2" unique_id=111223355]
+mesh = SubResource("BoxMesh_box2")
+material_override = SubResource("BoxMaterial_box2")
